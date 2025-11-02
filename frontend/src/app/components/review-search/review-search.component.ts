@@ -34,7 +34,11 @@ export class ReviewSearchComponent {
     })
     this.reviewService.getAll().subscribe(reviews => {
       this.reviews = reviews;
-      this.reviewCount = reviews.length;
+      if(this.mode === 'admin') {
+        this.reviewCount = reviews.length;
+      } else{
+        this.reviewCount = reviews.filter(r => r.status !== 'REJECTED').length;
+      }
       this.onSortChange();
     });
   }
@@ -97,7 +101,11 @@ export class ReviewSearchComponent {
     // reload full list
     this.reviewService.getAll().subscribe(reviews => {
       this.reviews = reviews;
-      this.reviewCount = reviews.length;
+      if(this.mode === 'admin') {
+        this.reviewCount = reviews.length;
+      } else{
+        this.reviewCount = reviews.filter(r => r.status !== 'REJECTED').length;
+      }
       this.onSortChange(); // emit trié
     });
   }
